@@ -95,25 +95,37 @@ async function getSitesToRemove() {
 }
 
 async function saveSites() {
-  let text = document.getElementById("sitesToRemove").value;
+  let text = document.getElementById("sites-to-remove").value;
   await browser.storage.sync.set({ sitesToRemove: text });
+}
+
+function removeChildren(ele) {
+  while (ele.lastElementChild) {
+    ele.removeChild(ele.lastElementChild);
+  }
 }
 
 async function displayTabsToDiscard() {
   let tabs = await tabsToRemove();
+  
+  
   let tBody = document.getElementById("tabs-to-remove");
-  if (!tabs) {
-      let div = document.getElementById("to-purge");
-      div.innerHTML = "<p>No tabs to purge!</p>";
-      return;
-    }
-  tBody.innerHTML = "";
+  removeChildren(tBody)
   tabs.sort((a, b) => a.url < b.url);
   tabs.forEach((tab) => {
     row = tBody.insertRow();
-    row.insertCell().innerHTML = tab.title;
-    row.insertCell().innerHTML = tab.url;
+    row.insertCell().textContent = tab.title;
+    row.insertCell().textContent = tab.url;
   });
+
+  let notabs = document.getElementById("no-tabs-to-purge");
+  if (!tabs || tabs.length == 0) {
+    notabs.style.visibility = "visible"
+    return;
+  }
+  else {
+    notabs.style.visibility = "hidden"
+  }
 }
 
 async function initializePopup() {
