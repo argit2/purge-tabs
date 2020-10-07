@@ -1,0 +1,11 @@
+html, body {
+  min-width: 320px;
+}
+
+textarea {
+  width: 100%;
+  min-height: 100px;
+  white-space: pre;
+  overflow-wrap: normal;
+  overflow-x: scroll;
+}

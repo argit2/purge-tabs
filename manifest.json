@@ -1,0 +1,31 @@
+{
+
+  "manifest_version": 2,
+  "name": "Purge Tabs",
+  "version": "1.0",
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "crabofvoid@gmail.com"
+    }
+  },
+
+  "description": "Removes tabs that match the specified url.",
+  "homepage_url": "https://github.com/argit2/purge-tabs",
+
+  "icons": {
+    "32": "icons/32.png"
+  },
+
+  "permissions": [
+    "tabs",
+    "storage"
+  ],
+
+  "browser_action": {
+    "default_icon": "icons/32.png",
+    "default_title": "Purge Tabs",
+    "default_popup": "purgetabs.html"
+  }
+
+}
