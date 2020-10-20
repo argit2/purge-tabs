@@ -25,7 +25,7 @@
   "browser_action": {
     "default_icon": "icons/32.png",
     "default_title": "Purge Tabs",
-    "default_popup": "purgetabs.html"
+    "default_popup": "index.html"
   }
 
 }
