@@ -1,7 +1,16 @@
 // adapted heavily from https://dev.to/theonlybeardedbeast/comparing-urls-in-javascript-2iha
+
 const urlsEqual = (urlProp1, urlProp2) => {
-  const url1 = new URL(urlProp1);
-  const url2 = new URL(urlProp2);
+  const url1 = null;
+  const url2 = null;
+  try {
+    const url1 = new URL(urlProp1);
+    const url2 = new URL(urlProp2);
+  }
+  catch (_) {
+    return;
+  }
+  if (! url1 || ! url2) return;
 
   if (url1.origin != url2.origin) {
     return false;
@@ -19,6 +28,8 @@ const urlsEqual = (urlProp1, urlProp2) => {
 
   return true;
 };
+
+var browser = browser || chrome;
 
 const settingsDefaults = {
   //backup: [],
