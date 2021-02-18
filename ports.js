@@ -1,6 +1,7 @@
 // adapted heavily from https://dev.to/theonlybeardedbeast/comparing-urls-in-javascript-2iha
 
 const urlsEqual = (urlProp1, urlProp2) => {
+  if (urlProp1 === urlProp2) return true;
   const url1 = null;
   const url2 = null;
   try {
