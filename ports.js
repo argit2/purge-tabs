@@ -51,8 +51,22 @@ async function getSitesToRemove() {
   if (!text) {
     return [];
   }
-  return filterWhiteSpace(text.split("\n"));
+  let sites = filterWhiteSpace(text.split("\n"));
+  sites = sites.map(site => {
+    site = site.replace(/^((https?|ftp):\/\/)?(www\.)?/i, "*") // replace https, ftp and etc with blob
+    site = site.replace(/^[^\*]/, "*") // add blob to beginning
+    return site;
+  })
+  return sites
 }
+
+function wildcardCheck (i, m) {
+  var regExpEscape = function(s) {
+      return s.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&');
+  };
+  var m = new RegExp('^' + m.split(/\*+/).map(regExpEscape).join('.*') + '$', 'gi');
+  return i.match(m) !== null && i.match(m).length >= 1;
+};
 
 async function getBrowserStorage() {
   let storage = await browser.storage.sync.get(settingsDefaults);
@@ -70,7 +84,11 @@ async function listTabs() {
     if (!site_list) {
       return false;
     }
-    return !tab.pinned && site_list.some((site) => urlsEqual(site, tab.url));
+    return !tab.pinned && site_list.some((site) => {
+      // let equal = urlsEqual(site, tab.url);
+      let blobMatch = wildcardCheck(tab.url, site);
+      return blobMatch;
+    });
   }
   let tabsToRemove = tabsList.filter(tabMatches);
   let message = tabsToRemove.map((tab) => { return {id : tab.id, title : tab.title, url : tab.url}; });
